@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Email subscription</title>
+</head>
+<body>
+    <div class="hero">
+        <h3>Coming soon!</h3>
+        <h1>Lapaz Motel<br>Website is on the way</h1>
+        <p>Subscribe for more details</p>
+        <form name ="submit-to-google-sheet">
+            <input id ="inputbox" type="email" name="Email" placeholder="Enter your email" required>
+            <button type="submit"><img src="images/send-icon.png"></button>
+        </form>
+        <span id ="Successmsg"></span>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx5H0HSAnlEi9rHXsYYWWQPdfHdUm3xRdqIOHi6a9ZgVrHZMAQK18cTzEY-RDbg8GebYw/exec'
+        const form = document.forms['submit-to-google-sheet']
+        let success = document.getElementById("Successmsg");
+        let inputbox = document.getElementById("inputbox");
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response =>{
+                success.innerHTML = "Thank you for Subscribing!"
+                setTimeout(function(){
+                  success.innerHTML = "";
+                },5000)
+                form.reset()
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+
+</body>
+</html>
